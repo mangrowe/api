@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
+use App\Models\User;
 use Auth;
 
 class TeamsController extends Controller
@@ -17,6 +18,20 @@ class TeamsController extends Controller
     public function index()
     {
         return Team::orderBy('title')->get();
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return response()->json([
+            'data' => [
+                'users' => User::orderBy('name')->get(),
+            ]
+        ]);
     }
 
     /**
@@ -52,7 +67,12 @@ class TeamsController extends Controller
      */
     public function show($id)
     {
-        return Team::findOrFail($id);
+        return response()->json([
+            'data' => [
+                'team' => Team::findOrFail($id),
+                'users' => User::orderBy('name')->get(),
+            ]
+        ]);
     }
 
     /**
