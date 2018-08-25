@@ -24,4 +24,14 @@ class Organization extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    /**
+     * The cycles associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function cycles()
+    {
+        return $this->hasMany(Cycle::class);
+    }
 }

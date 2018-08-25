@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Team;
 use App\Models\User;
 
-class TeamsSeederTable extends Seeder
+class TeamsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
