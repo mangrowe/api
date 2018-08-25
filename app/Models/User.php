@@ -48,6 +48,16 @@ class User extends Authenticatable
     }
 
     /**
+     * The objectives associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function objectives()
+    {
+        return $this->hasMany(Objective::class);
+    }
+
+    /**
      * Generates a random token for login access.
      * 
      * @return string

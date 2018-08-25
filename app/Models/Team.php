@@ -20,7 +20,7 @@ class Team extends Model
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function leader()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -33,5 +33,15 @@ class Team extends Model
     public function users()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    /**
+     * The objectives associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function objectives()
+    {
+        return $this->hasMany(Objective::class);
     }
 }

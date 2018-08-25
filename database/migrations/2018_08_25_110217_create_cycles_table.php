@@ -16,8 +16,6 @@ class CreateCyclesTable extends Migration
         Schema::create('cycles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('organization_id')->unsigned();
-            $table->integer('parent_id')->unsigned()->nullable();
-            $table->string('level');
             $table->string('title');
             $table->text('description');
             $table->date('start_at');
@@ -27,11 +25,6 @@ class CreateCyclesTable extends Migration
             $table->foreign('organization_id')
                   ->references('id')
                   ->on('organizations');
-
-            $table->foreign('parent_id')
-                  ->references('id')
-                  ->on('cycles')
-                  ->onDelete('cascade');
         });
     }
 

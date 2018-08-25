@@ -7,7 +7,6 @@ $factory->define(Cycle::class, function (Faker $faker) {
     static $i = 1;
     return [
         'organization_id' => $i % 2 ? $i : 2,
-        'level' => Cycle::STRATEGIC,
         'title' => $faker->words(4, true),
         'description' => $faker->sentence,
         'start_at' => '2018-'. $i .'-01',
