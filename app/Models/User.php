@@ -68,6 +68,16 @@ class User extends Authenticatable
     }
 
     /**
+     * The check-ins associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function checkIns()
+    {
+        return $this->hasMany(CheckIn::class);
+    }
+
+    /**
      * Generates a random token for login access.
      * 
      * @return string

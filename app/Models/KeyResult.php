@@ -70,4 +70,14 @@ class KeyResult extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * The check-ins associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function checkIns()
+    {
+        return $this->hasMany(CheckIn::class);
+    }
 }
