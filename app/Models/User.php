@@ -58,6 +58,16 @@ class User extends Authenticatable
     }
 
     /**
+     * The keyResults associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function keyResults()
+    {
+        return $this->hasMany(KeyResult::class);
+    }
+
+    /**
      * Generates a random token for login access.
      * 
      * @return string

@@ -86,4 +86,14 @@ class Objective extends Model
     {
         return $this->hasMany(Objective::class, 'parent_id');
     }
+
+    /**
+     * The key results associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function keyResults()
+    {
+        return $this->hasMany(KeyResult::class);
+    }
 }
