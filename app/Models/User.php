@@ -38,6 +38,16 @@ class User extends Authenticatable
     }
 
     /**
+     * The teams associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
+    /**
      * Generates a random token for login access.
      * 
      * @return string
