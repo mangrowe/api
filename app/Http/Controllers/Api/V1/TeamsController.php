@@ -28,9 +28,7 @@ class TeamsController extends Controller
     public function create()
     {
         return response()->json([
-            'data' => [
-                'users' => User::orderBy('name')->get(),
-            ]
+            'users' => User::orderBy('name')->get(),
         ]);
     }
 
@@ -46,16 +44,12 @@ class TeamsController extends Controller
         $team = Auth::user()->teams()->create($req);
         if($team->users()->sync($req['users'])) {
             return response()->json([
-                'data' => [
-                    'message' => trans('messages.success'),
-                ]
+                'message' => trans('messages.success')
             ]);
         }else {
             return response()->json([
-                'error' => [
-                    'message' => trans('messages.error'),
-                ]
-            ]);
+                'message' => trans('messages.error')
+            ], 400);
         }
     }
 
@@ -67,11 +61,29 @@ class TeamsController extends Controller
      */
     public function show($id)
     {
+        $team = Team::findOrFail($id);
         return response()->json([
-            'data' => [
-                'team' => Team::findOrFail($id),
-                'users' => User::orderBy('name')->get(),
-            ]
+            'team' => $team,
+            'leader' => $team->user,
+            'members' => $team->users->toArray(),
+            'users' => User::orderBy('name')->get(),
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $team = Team::findOrFail($id);
+        return response()->json([
+            'team' => $team,
+            'leader' => $team->user,
+            'members' => $team->users->toArray(),
+            'users' => User::orderBy('name')->get(),
         ]);
     }
 
@@ -89,16 +101,12 @@ class TeamsController extends Controller
         $team->update($req);
         if($team->users()->sync($req['users'])) {
             return response()->json([
-                'data' => [
-                    'message' => trans('messages.success'),
-                ]
+                'message' => trans('messages.success'),
             ]);
         }else {
             return response()->json([
-                'error' => [
-                    'message' => trans('messages.error'),
-                ]
-            ]);
+                'message' => trans('messages.error'),
+            ], 400);
         }
     }
 
@@ -113,16 +121,12 @@ class TeamsController extends Controller
         $team = Team::findOrFail($id);
         if($team->delete()) {
             return response()->json([
-                'data' => [
-                    'message' => trans('messages.success'),
-                ]
+                'message' => trans('messages.success'),
             ]);
         }else {
             return response()->json([
-                'error' => [
-                    'message' => trans('messages.error'),
-                ]
-            ]);
+                'message' => trans('messages.error'),
+            ], 400);
         }
     }
 }

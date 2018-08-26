@@ -19,7 +19,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::middleware('auth:api')->group(function() {
-        Route::resource('teams', 'TeamsController', ['except' => 'edit']);
+        Route::resource('teams', 'TeamsController');
         Route::get('dashboard', 'UsersController@dashboard');
     });
 });
