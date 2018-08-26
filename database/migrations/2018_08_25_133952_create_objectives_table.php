@@ -18,7 +18,7 @@ class CreateObjectivesTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('cycle_id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->integer('team_id')->unsigned();
+            $table->integer('team_id')->unsigned()->nullable();
             $table->string('level');
             $table->string('title');
             $table->text('description');

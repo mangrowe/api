@@ -65,7 +65,7 @@ class TeamsController extends Controller
         return response()->json([
             'team' => $team,
             'leader' => $team->user,
-            'members' => $team->users->toArray(),
+            'members' => $team->users,
             'users' => User::orderBy('name')->get(),
         ]);
     }
@@ -82,7 +82,7 @@ class TeamsController extends Controller
         return response()->json([
             'team' => $team,
             'leader' => $team->user,
-            'members' => $team->users->toArray(),
+            'members' => $team->users,
             'users' => User::orderBy('name')->get(),
         ]);
     }
