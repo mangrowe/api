@@ -4,19 +4,18 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Cycle;
+use App\Models\Organization;
 
-class CyclesController extends Controller
+class OrganizationsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return Cycle::where('organization_id', $request->input('organization_id'))->latest()->get();
+        return Organization::orderBy('title')->get();
     }
 
     /**
@@ -27,7 +26,7 @@ class CyclesController extends Controller
      */
     public function store(Request $request)
     {
-        if(Cycle::create($request->all())) {
+        if(Organization::create($request->all())) {
             return response()->json([
                 'message' => trans('messages.success')
             ]);
@@ -46,7 +45,7 @@ class CyclesController extends Controller
      */
     public function edit($id)
     {
-        return Cycle::findOrFail($id);
+        return Organization::findOrFail($id);
     }
 
     /**
@@ -58,8 +57,8 @@ class CyclesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $cycle = Cycle::findOrFail($id);
-        if($cycle->update($request->all())) {
+        $organization = Organization::findOrFail($id);
+        if($organization->update($request->all())) {
             return response()->json([
                 'message' => trans('messages.success')
             ]);
@@ -78,8 +77,8 @@ class CyclesController extends Controller
      */
     public function destroy($id)
     {
-        $cycle = Cycle::findOrFail($id);;
-        if($cycle->delete()) {
+        $organization = Organization::findOrFail($id);
+        if($organization->delete()) {
             return response()->json([
                 'message' => trans('messages.success')
             ]);

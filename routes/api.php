@@ -19,6 +19,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::middleware('auth:api')->group(function() {
+		Route::resource('organizations', 'OrganizationsController', ['except' => ['show', 'create']]);
     	Route::resource('users', 'UsersController', ['except' => ['show', 'create']]);
     	Route::resource('cycles', 'CyclesController', ['except' => ['show', 'create']]);
     	Route::resource('objectives', 'ObjectivesController');
