@@ -41,7 +41,7 @@ class TeamsController extends Controller
     public function store(Request $request)
     {
         $req = $request->all();
-        $team = Auth::user()->teams()->create($req);
+        $team = Team::create($req);
         if($team->users()->sync($req['users'])) {
             return response()->json([
                 'message' => trans('messages.success')
