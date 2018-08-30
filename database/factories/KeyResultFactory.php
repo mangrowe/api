@@ -17,6 +17,6 @@ $factory->define(KeyResult::class, function (Faker $faker) {
         'current' => rand(51, 90),
         'target' => 100,
         'done' => false,
-        'format' => $i % 2 ? KeyResult::FORMATS['boolean'] : KeyResult::FORMATS['number'],
+        'format' => $i % 2 ? KeyResult::FORMATS['currency'] : KeyResult::FORMATS['percentage'],
     ];
 });

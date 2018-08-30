@@ -20,12 +20,12 @@ class CreateKeyResultsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('type', 10);
-            $table->char('criteria', 3);
+            $table->char('criteria', 3)->nullable();
             $table->integer('initial');
             $table->integer('current');
             $table->integer('target');
             $table->boolean('done')->default(false);
-            $table->string('format', 10);
+            $table->string('format', 10)->nullable();
             $table->timestamps();
         });
     }

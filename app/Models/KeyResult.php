@@ -38,7 +38,7 @@ class KeyResult extends Model
     const FORMATS = [
         'number' => 'number',
         'currency' => 'currency',
-        'boolean' => 'boolean',
+        'percentage' => 'percentage',
     ];
 
     /**
