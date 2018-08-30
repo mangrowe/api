@@ -23,7 +23,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
         Route::resource('keyResults', 'KeyResultsController');
 		Route::resource('organizations', 'OrganizationsController', ['except' => ['show', 'create']]);
     	Route::resource('users', 'UsersController', ['except' => ['show', 'create']]);
-    	Route::resource('cycles', 'CyclesController', ['except' => ['show', 'create']]);
+    	Route::resource('cycles', 'CyclesController');
     	Route::resource('objectives', 'ObjectivesController');
         Route::resource('teams', 'TeamsController');
         Route::get('dashboard', 'UsersController@dashboard');

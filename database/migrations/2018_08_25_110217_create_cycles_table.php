@@ -16,6 +16,7 @@ class CreateCyclesTable extends Migration
         Schema::create('cycles', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('organization_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->string('title');
             $table->text('description');
             $table->date('start_at');

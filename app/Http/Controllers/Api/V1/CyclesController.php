@@ -20,6 +20,16 @@ class CyclesController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return Cycle::latest()->get();
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -39,6 +49,17 @@ class CyclesController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return Cycle::findOrFail($id);
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -46,7 +67,10 @@ class CyclesController extends Controller
      */
     public function edit($id)
     {
-        return Cycle::findOrFail($id);
+        return response()->json([
+            'cycle' => Cycle::findOrFail($id),
+            'cycles' => Cycle::latest()->get(),
+        ]);
     }
 
     /**

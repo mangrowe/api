@@ -12,7 +12,7 @@ class Cycle extends Model
      * @var array
      */
     protected $fillable = [
-        'organization_id', 'title', 'description', 'start_at', 'end_at',
+        'organization_id', 'parent_id', 'title', 'description', 'start_at', 'end_at',
     ];
 
     /**
@@ -33,5 +33,25 @@ class Cycle extends Model
     public function objectives()
     {
         return $this->hasMany(Objective::class);
+    }
+
+    /**
+     * The parent associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function parent()
+    {
+        return $this->belongsTo(Cycle::class, 'parent_id');
+    }
+
+    /**
+     * The children associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function children()
+    {
+        return $this->hasMany(Cycle::class, 'parent_id');
     }
 }
