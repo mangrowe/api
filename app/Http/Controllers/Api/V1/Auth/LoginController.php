@@ -61,10 +61,9 @@ class LoginController extends Controller
             $user->generateToken();
 
             return response()->json([
-                'data' => [
-                    'user' => $user->toArray(),
-                    'organizations' => $user->organizations->toArray(),
-                ],
+                'user' => $user->toArray(),
+                'organizations' => $user->organizations->toArray(),
+                'message' => trans('messages.success'),
             ]);
         }
         
@@ -72,10 +71,8 @@ class LoginController extends Controller
 
         //return $this->sendFailedLoginResponse($request);
         return response()->json([
-            'error' => [
-                'message' => trans('auth.failed'),
-            ],
-        ]);
+            'message' => trans('auth.failed'),
+        ], 400);
     }
     
     /**
@@ -94,6 +91,8 @@ class LoginController extends Controller
             $user->save();
         }
 
-        return response()->json(['data' => ['message' => trans('auth.logout')]], 200);
+        return response()->json([
+            'message' => trans('auth.logout'),
+        ], 200);
     }
 }
