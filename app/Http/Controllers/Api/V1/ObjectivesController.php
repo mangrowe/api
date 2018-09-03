@@ -8,31 +8,35 @@ use App\Models\Objective;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Cycle;
+use App\Models\Organization;
 
 class ObjectivesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Objective::with('cycle')->latest()->get();
+        return Objective::where('organization_id', $request->input('organization_id'))->with('cycle')->latest()->get();
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $organization = Organization::findOrFail($request->input('organization_id'));
         return response()->json([
-            'objectives' => Objective::latest()->get(),
-            'users' => User::orderBy('name')->get(),
-            'teams' => Team::orderBy('title')->get(),
-            'cycles' => Cycle::latest()->get(),
+            'objectives' => $organization->objectives()->latest()->get(),
+            'users' => $organization->users()->orderBy('name')->get(),
+            'teams' => $organization->teams()->orderBy('title')->get(),
+            'cycles' => $organization->cycles()->latest()->get(),
         ]);
     }
 
@@ -70,18 +74,20 @@ class ObjectivesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $objective = Objective::findOrFail($id);
+        $organization = Organization::findOrFail($request->input('organization_id'));
         return response()->json([
             'objective' => $objective,
-            'objectives' => Objective::latest()->get(),
-            'users' => User::orderBy('name')->get(),
-            'teams' => Team::orderBy('title')->get(),
-            'cycles' => Cycle::latest()->get(),
+            'objectives' => $organization->objectives()->latest()->get(),
+            'users' => $organization->users()->orderBy('name')->get(),
+            'teams' => $organization->teams()->orderBy('title')->get(),
+            'cycles' => $organization->cycles()->latest()->get(),
         ]);
     }
 

@@ -47,9 +47,19 @@ class KeyResult extends Model
      * @var array
      */
     protected $fillable = [
-        'objective_id', 'user_id', 'title', 'description', 'type', 
+        'organization_id', 'objective_id', 'user_id', 'title', 'description', 'type', 
         'criteria', 'initial', 'current', 'target', 'done', 'format',
     ];
+
+    /**
+     * The organization associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 
     /**
      * The objective associated with.

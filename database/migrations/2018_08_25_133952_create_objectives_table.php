@@ -15,6 +15,7 @@ class CreateObjectivesTable extends Migration
     {
         Schema::create('objectives', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('organization_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('cycle_id')->unsigned();
             $table->integer('user_id')->unsigned();

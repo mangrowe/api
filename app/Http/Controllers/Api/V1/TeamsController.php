@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Organization;
 use Auth;
 
 class TeamsController extends Controller
@@ -13,22 +14,26 @@ class TeamsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Team::orderBy('title')->get();
+        $organization = Organization::findOrFail($request->input('organization_id'));
+        return $organization->teams()->orderBy('title')->get();
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $organization = Organization::findOrFail($request->input('organization_id'));
         return response()->json([
-            'users' => User::orderBy('name')->get(),
+            'users' => $organization->users()->orderBy('name')->get(),
         ]);
     }
 
@@ -73,17 +78,19 @@ class TeamsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $team = Team::findOrFail($id);
+        $organization = Organization::findOrFail($request->input('organization_id'));
         return response()->json([
             'team' => $team,
             'leader' => $team->user,
             'members' => $team->users,
-            'users' => User::orderBy('name')->get(),
+            'users' => $organization->users()->orderBy('name')->get(),
         ]);
     }
 

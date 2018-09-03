@@ -15,6 +15,7 @@ class CreateKeyResultsTable extends Migration
     {
         Schema::create('key_results', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('organization_id')->unsigned();
             $table->integer('objective_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('title');

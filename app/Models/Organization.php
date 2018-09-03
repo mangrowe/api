@@ -26,6 +26,16 @@ class Organization extends Model
     }
 
     /**
+     * The teams associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function teams()
+    {
+        return $this->hasMany(Team::class);
+    }
+
+    /**
      * The cycles associated with.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -33,5 +43,25 @@ class Organization extends Model
     public function cycles()
     {
         return $this->hasMany(Cycle::class);
+    }
+
+    /**
+     * The objectives associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function objectives()
+    {
+        return $this->hasMany(Objective::class);
+    }
+
+    /**
+     * The keyResults associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function keyResults()
+    {
+        return $this->hasMany(KeyResult::class);
     }
 }

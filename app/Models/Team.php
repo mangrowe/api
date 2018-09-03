@@ -12,8 +12,18 @@ class Team extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'title',
+        'organization_id', 'user_id', 'title',
     ];
+
+    /**
+     * The organization associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class);
+    }
 
     /**
      * The leader associated with.

@@ -6,6 +6,7 @@ use App\Models\Objective;
 $factory->define(Objective::class, function (Faker $faker) {
     static $i = 1;
     return [
+    	'organization_id' => $i % 2 ? 1 : 2,
         'cycle_id' => 1,
         'user_id' => $i % 2 ? 1 : 2,
         'team_id' => $i % 2 ? 2 : 1,

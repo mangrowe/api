@@ -7,6 +7,7 @@ $factory->define(KeyResult::class, function (Faker $faker) {
     static $i = 0;
     $i++;
     return [
+        'organization_id' => $i % 2 ? 1 : 2,
         'objective_id' => rand(1, 4),
         'user_id' => rand(1, 10),
         'title' => $faker->words(3, true),

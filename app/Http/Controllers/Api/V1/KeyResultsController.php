@@ -7,29 +7,33 @@ use App\Http\Controllers\Controller;
 use App\Models\KeyResult;
 use App\Models\Objective;
 use App\Models\User;
+use App\Models\Organization;
 
 class KeyResultsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return KeyResult::latest()->get();
+        return KeyResult::where('organization_id', $request->input('organization_id'))->latest()->get();
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        $organization = Organization::findOrFail($request->input('organization_id'));
         return response()->json([
-            'objectives' => Objective::latest()->get(),
-            'users' => User::orderBy('name')->get()
+            'objectives' => $organization->objectives()->latest()->get(),
+            'users' => $organization->users()->orderBy('name')->get(),
         ]);
     }
 
@@ -72,16 +76,18 @@ class KeyResultsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $keyResult = KeyResult::findOrFail($id);
+        $organization = Organization::findOrFail($request->input('organization_id'));
         return response()->json([
             'keyResults' => $keyResult,
-            'objectives' => Objective::latest()->get(),
-            'users' => User::orderBy('name')->get()
+            'objectives' => $organization->objectives()->latest()->get(),
+            'users' => $organization->users()->orderBy('name')->get(),
         ]);
     }
 

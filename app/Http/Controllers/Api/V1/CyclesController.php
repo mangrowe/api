@@ -24,9 +24,9 @@ class CyclesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return Cycle::latest()->get();
+        return Cycle::where('organization_id', $request->input('organization_id'))->latest()->get();
     }
 
     /**
@@ -62,14 +62,15 @@ class CyclesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         return response()->json([
             'cycle' => Cycle::findOrFail($id),
-            'cycles' => Cycle::latest()->get(),
+            'cycles' => Cycle::where('organization_id', $request->input('organization_id'))->latest()->get(),
         ]);
     }
 
