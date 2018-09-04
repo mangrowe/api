@@ -25,7 +25,8 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     	Route::resource('users', 'UsersController', ['except' => ['show', 'create']]);
     	Route::resource('cycles', 'CyclesController');
     	Route::resource('objectives', 'ObjectivesController');
-        Route::resource('teams', 'TeamsController');
+        Route::resource('teams', 'TeamsController');        
+        Route::get('users/profile', 'UsersController@profile');
         Route::get('dashboard', 'UsersController@dashboard');
     });
 });

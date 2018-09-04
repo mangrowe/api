@@ -44,8 +44,8 @@ class ResetPasswordController extends Controller
             $password = str_random(6);
             $user->update(['password' => bcrypt($password)]);
             Mail::to($request->input('email'))->send(new ResetPasswordMail($user, $password));
-            return response(['success' => trans('mails.reset')], 200);
+            return response(['message' => trans('mails.reset')], 200);
         }
-        return response(['errors' => trans('passwords.user')], 401);
+        return response(['message' => trans('passwords.user')], 401);
     }
 }

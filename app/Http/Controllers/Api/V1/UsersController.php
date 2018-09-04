@@ -114,4 +114,14 @@ class UsersController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function profile()
+    {
+        return $this->edit(Auth::guard('api')->user()->id);
+    }
 }
