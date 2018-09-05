@@ -19,6 +19,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::middleware('auth:api')->group(function() {
+        Route::resource('departments', 'DepartmentsController');
         Route::resource('checkIns', 'CheckInsController');
         Route::resource('keyResults', 'KeyResultsController');
 		Route::resource('organizations', 'OrganizationsController', ['except' => ['show', 'create']]);

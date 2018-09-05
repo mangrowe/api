@@ -33,7 +33,7 @@ class Objective extends Model
      * @var array
      */
     protected $fillable = [
-        'organization_id', 'parent_id', 'cycle_id', 'user_id', 
+        'organization_id', 'department_id', 'parent_id', 'cycle_id', 'user_id', 
         'team_id', 'level', 'title', 'description',
     ];
 
@@ -45,6 +45,16 @@ class Objective extends Model
     public function organization()
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    /**
+     * The department associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 
     /**

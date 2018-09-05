@@ -16,6 +16,7 @@ class CreateObjectivesTable extends Migration
         Schema::create('objectives', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('organization_id')->unsigned();
+            $table->integer('department_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('cycle_id')->unsigned();
             $table->integer('user_id')->unsigned();
@@ -24,6 +25,14 @@ class CreateObjectivesTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->timestamps();
+
+            $table->foreign('organization_id')
+                  ->references('id')
+                  ->on('organizations');
+
+            $table->foreign('department_id')
+                  ->references('id')
+                  ->on('departments');
 
             $table->foreign('cycle_id')
                   ->references('id')
