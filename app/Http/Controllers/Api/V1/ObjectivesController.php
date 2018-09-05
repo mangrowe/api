@@ -37,6 +37,7 @@ class ObjectivesController extends Controller
             'users' => $organization->users()->orderBy('name')->get(),
             'teams' => $organization->teams()->orderBy('title')->get(),
             'cycles' => $organization->cycles()->latest()->get(),
+            'departments' => $organization->departments()->orderBy('title')->get(),
         ]);
     }
 
@@ -88,6 +89,7 @@ class ObjectivesController extends Controller
             'users' => $organization->users()->orderBy('name')->get(),
             'teams' => $organization->teams()->orderBy('title')->get(),
             'cycles' => $organization->cycles()->latest()->get(),
+            'departments' => $organization->departments()->orderBy('title')->get(),
         ]);
     }
 

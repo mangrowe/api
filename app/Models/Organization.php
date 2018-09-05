@@ -64,4 +64,14 @@ class Organization extends Model
     {
         return $this->hasMany(KeyResult::class);
     }
+
+    /**
+     * The departments associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function departments()
+    {
+        return $this->hasMany(Department::class);
+    }
 }
