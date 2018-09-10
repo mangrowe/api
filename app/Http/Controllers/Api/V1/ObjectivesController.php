@@ -69,7 +69,7 @@ class ObjectivesController extends Controller
      */
     public function show($id)
     {
-        return Objective::findOrFail($id);
+        return Objective::with('keyResults')->findOrFail($id);
     }
 
     /**
