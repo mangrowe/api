@@ -50,7 +50,9 @@ class UsersController extends Controller
     {
         $req = $request->all();
         $req['password'] = strlen($req['password']) > 4 ? bcrypt($req['password']) : $user->password;
-        if(User::create($req)) {
+        $user = User::create($req);
+        if($user) {
+            $user->organizations()->sync($req['organization_id']);
             return response()->json([
                 'message' => trans('messages.success')
             ]);
