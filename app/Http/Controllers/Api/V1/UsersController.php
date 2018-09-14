@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Objective;
 use App\Models\KeyResult;
 use App\Models\User;
+use App\Models\Organization;
 
 class UsersController extends Controller
 {
@@ -71,7 +72,12 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        return User::findOrFail($id);
+        $user = User::findOrFail($id);
+        return response()->json([
+            'user' => User::findOrFail($id),
+            'associations' => $user->organizations,
+            'organizations' => Organization::orderBy('title')->get(),
+        ]);
     }
 
     /**
@@ -86,6 +92,7 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $req = $request->all();
         $req['password'] = strlen($req['password']) > 4 ? bcrypt($req['password']) : $user->password;
+        $user->organizations()->sync($req['associations']);
         if($user->update($req)) {
             return response()->json([
                 'message' => trans('messages.success'),
