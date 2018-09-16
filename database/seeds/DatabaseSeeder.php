@@ -18,5 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ObjectivesTableSeeder::class);
         $this->call(KeyResultsTableSeeder::class);
         $this->call(CheckInsTableSeeder::class);
+        $this->call(SettingsTableSeeder::class);
     }
 }

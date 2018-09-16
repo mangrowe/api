@@ -74,4 +74,14 @@ class Organization extends Model
     {
         return $this->hasMany(Department::class);
     }
+
+    /**
+     * The setting associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function setting()
+    {
+        return $this->hasOne(Setting::class);
+    }
 }
