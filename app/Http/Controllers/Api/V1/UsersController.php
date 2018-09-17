@@ -92,7 +92,9 @@ class UsersController extends Controller
         $user = User::findOrFail($id);
         $req = $request->all();
         $req['password'] = strlen($req['password']) > 4 ? bcrypt($req['password']) : $user->password;
-        $user->organizations()->sync($req['associations']);
+        if(isset($req['associations'])) {
+            $user->organizations()->sync($req['associations']);
+        }
         if($user->update($req)) {
             return response()->json([
                 'message' => trans('messages.success'),
