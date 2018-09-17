@@ -50,8 +50,10 @@ class ObjectivesController extends Controller
     public function store(Request $request)
     {
         $req = $request->all();
-        if(Objective::create($req)) {
+        $objective = Objective::create($req);
+        if($objective) {
             return response()->json([
+                'objective' => $objective,
                 'message' => trans('messages.success')
             ]);
         }else {
