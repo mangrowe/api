@@ -32,7 +32,7 @@ class Department extends Model
      */
     public function parent()
     {
-        return $this->belongsTo(Cycle::class, 'parent_id');
+        return $this->belongsTo(Department::class, 'parent_id');
     }
 
     /**
@@ -42,7 +42,7 @@ class Department extends Model
      */
     public function children()
     {
-        return $this->hasMany(Cycle::class, 'parent_id');
+        return $this->hasMany(Department::class, 'parent_id');
     }
 
     /**

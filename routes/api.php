@@ -19,6 +19,10 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::middleware('auth:api')->group(function() {
+        Route::get('departments/tree', 'DepartmentsController@tree');
+        Route::get('users/profile', 'UsersController@profile');
+        Route::get('dashboard', 'UsersController@dashboard');
+        
         Route::resource('settings', 'SettingsController', ['except' => ['show', 'create']]);
         Route::resource('departments', 'DepartmentsController');
         Route::resource('checkIns', 'CheckInsController');
@@ -28,7 +32,5 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     	Route::resource('cycles', 'CyclesController');
     	Route::resource('objectives', 'ObjectivesController');
         Route::resource('teams', 'TeamsController');        
-        Route::get('users/profile', 'UsersController@profile');
-        Route::get('dashboard', 'UsersController@dashboard');
     });
 });

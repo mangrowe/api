@@ -16,7 +16,7 @@ class DepartmentsController extends Controller
      */
     public function index(Request $request)
     {
-        return Department::where('organization_id', $request->input('organization_id'))->orderBy('title')->get();
+        return Department::where('organization_id', $request->input('organization_id'))->orderBy('title')->with('children')->get();
     }
 
     /**
@@ -114,4 +114,40 @@ class DepartmentsController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Display an organogram structure.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function tree(Request $request)
+    {
+        $organizations = Department::where('organization_id', $request->input('organization_id'))->orderBy('title')->select('id', 'parent_id', 'title as name')->get();
+
+        return $this->buildTree($organizations->toArray());
+    }
+
+    /**
+     * Build an tree recursive.
+     * 
+     * @see https://stackoverflow.com/questions/29384548/php-how-to-build-tree-structure-list#answer-29384894
+     * @return array
+     */
+    public function buildTree(array $elements, $parentId = 0) {
+        $branch = [];
+
+        foreach ($elements as $element) {
+            if ($element['parent_id'] == $parentId) {
+                $children = $this->buildTree($elements, $element['id']);
+                if ($children) {
+                    $element['children'] = $children;
+                }
+                $branch[] = $element;
+            }
+        }
+
+        return $branch;
+    }
+
 }

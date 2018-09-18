@@ -22,9 +22,9 @@ class CreateKeyResultsTable extends Migration
             $table->text('description');
             $table->string('type', 10);
             $table->char('criteria', 3)->nullable();
-            $table->integer('initial');
-            $table->integer('current');
-            $table->integer('target');
+            $table->decimal('initial', 10, 2);
+            $table->decimal('current', 10, 2);
+            $table->decimal('target', 10, 2);
             $table->boolean('done')->default(false);
             $table->string('format', 10)->nullable();
             $table->timestamps();

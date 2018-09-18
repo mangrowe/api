@@ -17,8 +17,8 @@ class CreateCheckInsTable extends Migration
             $table->increments('id');
             $table->integer('key_result_id')->unsgined();
             $table->integer('user_id')->unsigned();
-            $table->integer('previous');
-            $table->integer('current');
+            $table->decimal('previous', 10, 2);
+            $table->decimal('current', 10, 2);
             $table->integer('confidance');
             $table->text('description');
             $table->timestamps();
