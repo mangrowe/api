@@ -14,5 +14,6 @@ return [
 
     'success' => 'Operation performed successfully!',
     'error' => 'Whops, the operation could not be performed.',
+    'empty' => 'No record for this query.',
 
 ];

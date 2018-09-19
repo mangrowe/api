@@ -123,9 +123,9 @@ class DepartmentsController extends Controller
      */
     public function tree(Request $request)
     {
-        $organizations = Department::where('organization_id', $request->input('organization_id'))->orderBy('title')->select('id', 'parent_id', 'title as name')->get();
+        $departments = Department::where('organization_id', $request->input('organization_id'))->orderBy('title')->select('id', 'parent_id', 'title as name')->get();
 
-        return $this->buildTree($organizations->toArray());
+        return $this->buildTree($departments->toArray());
     }
 
     /**

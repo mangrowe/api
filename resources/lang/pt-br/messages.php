@@ -14,5 +14,6 @@ return [
 
     'success' => 'Operação realizada com sucesso!',
     'error' => 'Ops, não foi possível realizar a operação.',
+    'empty' => 'Nenhum registro para a consulta.', 
 
 ];

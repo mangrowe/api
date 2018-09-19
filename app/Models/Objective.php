@@ -116,4 +116,38 @@ class Objective extends Model
     {
         return $this->hasMany(KeyResult::class);
     }
+
+    /**
+     * Build a search query for cycle, title, department, user and description.
+     * 
+     * @param array $query
+     * @return array 
+     */
+    public function search($query)
+    {
+        $where = [];
+        unset($query['quest']);
+
+        if(isset($query['cycle_id'])) {
+            $where[] = ['cycle_id', '=', $query['cycle_id']];
+        }
+
+        if(isset($query['title'])) {
+            $where[] = ['title', 'like', '%'. $query['title'] .'%'];
+        }
+
+        if(isset($query['user_id'])) {
+            $where[] = ['user_id', '=', $query['user_id']];
+        }
+
+        if(isset($query['department_id'])) {
+            $where[] = ['department_id', '=', $query['department_id']];
+        }
+
+        if(isset($query['description'])) {
+            $where[] = ['description', 'like', '%'. $query['description'] .'%'];
+        }
+
+        return $query;
+    }
 }
