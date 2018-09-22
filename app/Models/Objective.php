@@ -150,4 +150,25 @@ class Objective extends Model
 
         return $query;
     }
+
+    /**
+     * Calculate the objective progress.
+     *
+     * @return float
+     */
+    public function progress()
+    {
+        $total = 0;
+        $keyResultsProgress = 0;
+
+        foreach($this->keyResults as $keyResult) {
+            $keyResultsProgress += $keyResult->progress();
+        }
+
+        if(count($this->keyResults)) {
+            $total = $keyResultsProgress / count($this->keyResults);
+        }
+
+        return $total;
+    }
 }

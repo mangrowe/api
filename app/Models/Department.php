@@ -54,4 +54,73 @@ class Department extends Model
     {
         return $this->hasMany(Objective::class);
     }
+
+    /**
+     * Calculate the department progress.
+     *
+     * @return float
+     */
+    public function progress()
+    {
+        $total = 0;
+        $weightHorizontal = 40;
+        $weightVertical = 60; 
+
+        if(!count($this->children)) {
+            $weightHorizontal = 100;
+            $weightVertical = 0; 
+        }
+
+        $numerator = ($this->progressHorizontal() * $weightHorizontal) + ($this->progressVertical() * $weightVertical);
+
+        $denominator = $weightHorizontal + $weightVertical;
+
+        if($denominator) {
+            $total = $numerator / $denominator;
+        }
+
+        return $total;
+    }
+
+    /**
+     * Calculate the horizontal progress.
+     *
+     * @return float
+     */
+    public function progressHorizontal()
+    {
+        $total = 0;
+        $objectivesProgress = 0;
+
+        foreach($this->objectives as $objective) {
+            $objectivesProgress += $objective->progress();
+        }
+
+        if(count($this->objectives)) {
+            $total = $objectivesProgress / count($this->objectives);
+        }
+
+        return $total;
+    }
+
+    /**
+     * Calculate the vertical progress.
+     *
+     * @return float
+     */
+    public function progressVertical()
+    {
+        $total = 0;
+        $childrenProgress = 0;
+
+        foreach($this->children as $children) {
+            $childrenProgress += $children->progress();
+        }
+
+        if(count($this->children)) {
+            $total = $childrenProgress / count($this->children);
+        }
+
+        return $total;
+    }
 }

@@ -90,4 +90,23 @@ class KeyResult extends Model
     {
         return $this->hasMany(CheckIn::class);
     }
+
+    /**
+     * Calculate the key result progress.
+     *
+     * @return float
+     */
+    public function progress()
+    {
+        if($this->type == 'boolean') {
+            return $this->current / $this->target * 100;
+        }else {
+            if($this->criteria == 'gte') {
+                return  ($this->current - $this->initial) / ($this->target - $this->initial) * 100;
+            }else {
+                return ($this->initial - $this->current) / ($this->initial - $this->target) * 100;
+            }
+        }
+    }
+
 }
