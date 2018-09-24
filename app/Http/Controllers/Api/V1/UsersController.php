@@ -9,6 +9,7 @@ use App\Models\Objective;
 use App\Models\KeyResult;
 use App\Models\User;
 use App\Models\Organization;
+use App\Http\Requests\UserRequest;
 
 class UsersController extends Controller
 {
@@ -44,10 +45,10 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $req = $request->all();
         $req['password'] = strlen($req['password']) > 4 ? bcrypt($req['password']) : $user->password;
@@ -83,11 +84,11 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UserRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = User::findOrFail($id);
         $req = $request->all();
