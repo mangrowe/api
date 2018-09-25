@@ -37,6 +37,14 @@ class DepartmentsController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->has('parent_id') && $request->input('parent_id') == null) {
+            $deparment = Department::whereNull('parent_id')->get();
+            if($deparment) {
+                return response()->json([
+                    'message' => trans('messages.onlyfather'),
+                ], 400);
+            }
+        }
         if(Department::create($request->all())) {
             return response()->json([
                 'message' => trans('messages.success')
@@ -84,6 +92,13 @@ class DepartmentsController extends Controller
     public function update(Request $request, $id)
     {
         $deparment = Department::findOrFail($id);
+        if($deparment->parent_id == null) {
+            if($request->has('parent_id') && $request->input('parent_id') != null) {
+                return response()->json([
+                    'message' => trans('messages.onlyfather'),
+                ], 400);
+            }
+        }
         if($deparment->update($request->all())) {
             return response()->json([
                 'message' => trans('messages.success')
