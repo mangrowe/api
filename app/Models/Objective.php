@@ -118,6 +118,16 @@ class Objective extends Model
     }
 
     /**
+     * The tags associated with.
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    /**
      * Build a search query for cycle, title, department, user and description.
      * 
      * @param array $query

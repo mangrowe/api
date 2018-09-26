@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Team;
 use App\Models\Cycle;
 use App\Models\Organization;
+use App\Models\Tag;
 
 class ObjectivesController extends Controller
 {
@@ -56,6 +57,14 @@ class ObjectivesController extends Controller
         $req = $request->all();
         $objective = Objective::create($req);
         if($objective) {
+            if($req['tags']) {
+                $tags = [];
+                for($i = 0; $i < count($req['tags']); $i++) {
+                    $tag = Tag::firstOrCreate(['title' => $req['tags'][$i]]);
+                    $tags[]  = $tag->id;
+                }
+                $objective->tags()->sync($tags);
+            }
             return response()->json([
                 'objective' => $objective,
                 'message' => trans('messages.success')
