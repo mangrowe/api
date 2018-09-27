@@ -51,7 +51,7 @@ class PagesController extends Controller
                 if ($children) {
                     $element['children'] = $children;
                 }
-                $element['name'] =  $element['name'] .'  ['. $element->progress() .'%]';
+                $element['name'] = substr($element['name'], 0, 15) .'  ['. (int) $element->progress() .'%]';
                 $branch[] = $element;
             }
         }
