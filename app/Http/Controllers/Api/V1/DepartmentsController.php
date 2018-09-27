@@ -38,8 +38,8 @@ class DepartmentsController extends Controller
     public function store(Request $request)
     {
         if($request->has('parent_id') && $request->input('parent_id') == null) {
-            $deparment = Department::whereNull('parent_id')->get();
-            if($deparment) {
+            $deparment = Department::where('organization_id', $request->input('organization_id'))->whereNull('parent_id')->get();
+            if(count($deparment)) {
                 return response()->json([
                     'message' => trans('messages.onlyfather'),
                 ], 400);
