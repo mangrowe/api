@@ -105,6 +105,7 @@ class ObjectivesController extends Controller
             'teams' => $organization->teams()->orderBy('title')->get(),
             'cycles' => $organization->cycles()->latest()->get(),
             'departments' => $organization->departments()->orderBy('title')->get(),
+            'tags' => $objective->tags,
         ]);
     }
 
@@ -117,8 +118,15 @@ class ObjectivesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $req = $request->all();
         $objective = Objective::findOrFail($id);
         if($objective->update($request->all())) {
+            $tags = [];
+            for($i = 0; $i < count($req['tags']); $i++) {
+                $tag = Tag::firstOrCreate(['title' => $req['tags'][$i]]);
+                $tags[]  = $tag->id;
+            }
+            $objective->tags()->sync($tags);
             return response()->json([
                 'message' => trans('messages.success'),
             ]);
