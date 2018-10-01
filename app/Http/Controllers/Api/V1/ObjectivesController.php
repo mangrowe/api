@@ -60,7 +60,10 @@ class ObjectivesController extends Controller
             if($req['tags']) {
                 $tags = [];
                 for($i = 0; $i < count($req['tags']); $i++) {
-                    $tag = Tag::firstOrCreate(['title' => $req['tags'][$i]]);
+                    $tag = Tag::firstOrCreate([
+                        'organization_id' => $req['organization_id'], 
+                        'title' => $req['tags'][$i]
+                    ]);
                     $tags[]  = $tag->id;
                 }
                 $objective->tags()->sync($tags);
@@ -123,7 +126,10 @@ class ObjectivesController extends Controller
         if($objective->update($request->all())) {
             $tags = [];
             for($i = 0; $i < count($req['tags']); $i++) {
-                $tag = Tag::firstOrCreate(['title' => $req['tags'][$i]]);
+                $tag = Tag::firstOrCreate([
+                    'organization_id' => $req['organization_id'], 
+                    'title' => $req['tags'][$i]
+                ]);
                 $tags[]  = $tag->id;
             }
             $objective->tags()->sync($tags);

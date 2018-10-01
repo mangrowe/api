@@ -19,6 +19,8 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::middleware('auth:api')->group(function() {
+        Route::get('tags/{id}', 'TagsController@show');
+        Route::get('tags', 'TagsController@index');
         Route::get('pages', 'PagesController@index');
         Route::get('departments/tree', 'DepartmentsController@tree');
         Route::get('users/profile', 'UsersController@profile');
