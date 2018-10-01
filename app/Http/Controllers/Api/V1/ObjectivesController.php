@@ -23,7 +23,9 @@ class ObjectivesController extends Controller
     {
         if($request->has('quest')) {
             $objective = new Objective();
-            return Objective::where('organization_id', $request->input('organization_id'))->where($objective->search($request->all()))->with('cycle')->latest()->get();
+            return Objective::where('organization_id', $request->input('organization_id'))
+            ->where($objective->search($request->all()))
+            ->with('cycle')->latest()->get();
         }
         return Objective::where('organization_id', $request->input('organization_id'))->with('cycle')->latest()->get();
     }

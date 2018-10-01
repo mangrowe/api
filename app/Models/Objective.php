@@ -136,7 +136,6 @@ class Objective extends Model
     public function search($query)
     {
         $where = [];
-        unset($query['quest']);
 
         if(isset($query['cycle_id'])) {
             $where[] = ['cycle_id', '=', $query['cycle_id']];
@@ -158,7 +157,7 @@ class Objective extends Model
             $where[] = ['description', 'like', '%'. $query['description'] .'%'];
         }
 
-        return $query;
+        return $where;
     }
 
     /**
