@@ -12,11 +12,12 @@ class TagsController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Tag::orderBy('title')->get();
+        return Tag::where('organization_id', $request->input('organization_id'))->orderBy('title')->get();
     }
 
     /**
