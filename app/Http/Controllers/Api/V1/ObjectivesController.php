@@ -164,4 +164,39 @@ class ObjectivesController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Clone an objective and their related key results.
+     *
+     * @see https://stackoverflow.com/questions/23895126/clone-an-eloquent-object-including-all-relationships#32775847
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function cloner($id)
+    {
+        $objective = Objective::findOrFail($id);
+        $objectiveNew = $objective->replicate();
+        $objectiveNew->push();
+        $objective->relations = [];
+        $objective->load('keyResults');
+        $relations = $objective->getRelations();
+        $objectiveNew->tags()->sync($objective->tags->pluck('id'));
+        foreach($relations as $relation) {
+            foreach ($relation as $relationRecord) {
+                $newRelationship = $relationRecord->replicate();
+                $newRelationship->objective_id = $objectiveNew->id;
+                $newRelationship->push();
+            }
+        }
+        if($objectiveNew->id) {
+            return response()->json([
+                'objective' => $objectiveNew,
+                'message' => trans('messages.success'),
+            ]);
+        }else {
+            return response()->json([
+                'message' => trans('messages.error'),
+            ], 400);
+        }
+    }
 }
