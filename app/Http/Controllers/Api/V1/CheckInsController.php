@@ -18,7 +18,10 @@ class CheckInsController extends Controller
      */
     public function index(Request $request)
     {
-        return CheckIn::where('key_result_id', $request->input('key_result_id'))->with('user')->latest()->get();
+        return response()->json([
+            'checkIns' => CheckIn::where('key_result_id', $request->input('key_result_id'))->with('user')->latest()->get(),
+            'keyResults' => KeyResult::findOrFail($request->input('key_result_id')),
+        ]);
     }
 
     /**
