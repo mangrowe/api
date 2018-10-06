@@ -142,4 +142,26 @@ class SettingsController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Database restores.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function restores(Request $request)
+    {
+        $artisan = Artisan::call('restores:run', [
+            'filename' => $request->input('backup'),
+        ]);
+        if(!$artisan) {
+            return response()->json([
+                'message' => trans('messages.success'),
+            ]);
+        }else {
+            return response()->json([
+                'message' => trans('messages.error'),
+            ], 400);
+        }
+    }
 }
