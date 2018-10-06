@@ -19,6 +19,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::middleware('auth:api')->group(function() {
+        Route::post('settings/downloader', 'SettingsController@downloader');
         Route::post('settings/backups', 'SettingsController@backups');
         Route::post('objectives/cloner/{id}', 'ObjectivesController@cloner');
         

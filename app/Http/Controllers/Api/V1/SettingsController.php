@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+
 use App\Models\Setting;
 use Artisan;
 
@@ -108,6 +110,30 @@ class SettingsController extends Controller
         if(!$artisan) {
             return response()->json([
                 'backup' => $now .'.sql',
+                'message' => trans('messages.success'),
+            ]);
+        }else {
+            return response()->json([
+                'message' => trans('messages.error'),
+            ], 400);
+        }
+    }
+
+    /**
+     * Database backups.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function downloader(Request $request)
+    {
+        $filename = 'backup.sql';
+        $file = storage_path('database/'. $request->input('backup'));
+        $newfile = public_path($filename);
+
+        if(copy($file, $newfile)) {
+            return response()->json([
+                'url' => url('') .'/'. $filename,
                 'message' => trans('messages.success'),
             ]);
         }else {
