@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
-
+use Artisan;
 
 class SettingsController extends Controller
 {
@@ -17,7 +17,10 @@ class SettingsController extends Controller
      */
     public function index(Request $request)
     {
-        return Setting::where('organization_id', $request->input('organization_id'))->orderBy('code')->orderBy('info')->get();
+        return response()->json([
+            'settings' => Setting::where('organization_id', $request->input('organization_id'))->orderBy('code')->orderBy('info')->get(),
+            'backups' => array_values(array_diff(scandir(storage_path().'/database/'), ['.', '..'])),
+        ]);
     }
 
     /**
@@ -87,6 +90,29 @@ class SettingsController extends Controller
         }else {
             return response()->json([
                 'message' => trans('messages.error')
+            ], 400);
+        }
+    }
+
+    /**
+     * Database backups.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function backups()
+    {
+        $now = date('Y-m-d H:i:s');
+        $artisan = Artisan::call('backups:run', [
+            'filename' => $now,
+        ]);
+        if(!$artisan) {
+            return response()->json([
+                'backup' => $now .'.sql',
+                'message' => trans('messages.success'),
+            ]);
+        }else {
+            return response()->json([
+                'message' => trans('messages.error'),
             ], 400);
         }
     }
