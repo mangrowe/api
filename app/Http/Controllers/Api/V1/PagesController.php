@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\Setting;
+use App\Models\LogActivity;
 
 class PagesController extends Controller
 {
@@ -20,6 +21,7 @@ class PagesController extends Controller
         return response()->json([
             'settings' => Setting::where('organization_id', $request->input('organization_id'))->orderBy('code')->orderBy('info')->get(),
             'departments' => $this->tree($request),
+            'activities' => LogActivity::where('organization_id', $request->input('organization_id'))->latest()->take(10)->get(),
         ]);
     }
 
