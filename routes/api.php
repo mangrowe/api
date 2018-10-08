@@ -18,7 +18,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     Route::post('login', 'Auth\LoginController@login');
     Route::post('logout', 'Auth\LoginController@logout');
 
-    Route::middleware('auth:api')->group(function() {
+    Route::middleware(['auth:api', 'logs'])->group(function() {
         Route::post('settings/restores', 'SettingsController@restores');
         Route::post('settings/downloader', 'SettingsController@downloader');
         Route::post('settings/backups', 'SettingsController@backups');

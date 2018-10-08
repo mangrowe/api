@@ -16,5 +16,18 @@ return [
     'error' => 'Whops, the operation could not be performed.',
     'empty' => 'No record for this query.',
     'onlyfather' => 'It is mandatory to have only one parent node.',
+    'organizations' => 'Organization',
+    'users' => 'User',
+    'teams' => 'Team',
+    'cycles' => 'Cycle',
+    'departments' => 'Department',
+    'objectives' => 'Objective',
+    'keyResults' => 'Key Result',
+    'settings' => 'Settings',
+    'store' => 'Creation',
+    'update' => 'Update',
+    'destroy' => 'Removal',
+    'by' => 'by',
+    'of' => 'of',
 
 ];
