@@ -12,7 +12,7 @@ class Department extends Model
      * @var array
      */
     protected $fillable = [
-        'organization_id', 'parent_id', 'title',
+        'organization_id', 'parent_id', 'title', 'weight_horizontal', 'weight_vertical',
     ];
 
     /**
@@ -63,8 +63,8 @@ class Department extends Model
     public function progress()
     {
         $total = 0;
-        $weightHorizontal = 40;
-        $weightVertical = 60; 
+        $weightHorizontal = $this->weight_horizontal;
+        $weightVertical = $this->weight_vertical; 
 
         if(!count($this->children)) {
             $weightHorizontal = 100;

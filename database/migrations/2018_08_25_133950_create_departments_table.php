@@ -18,6 +18,8 @@ class CreateDepartmentsTable extends Migration
             $table->integer('organization_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
             $table->string('title');
+            $table->integer('weight_horizontal')->default(40);
+            $table->integer('weight_vertical')->default(60);
             $table->timestamps();
 
             $table->foreign('organization_id')

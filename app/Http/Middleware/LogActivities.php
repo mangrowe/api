@@ -23,9 +23,14 @@ class LogActivities
             $req    = $request->all();
             $params = $route->parameters;
 
+
+
             if(isset($route->action['as'])) {
                 list($controller, $action) = explode('.', $route->action['as']);
+
+                
                 if(in_array($controller, ['teams', 'keyResults', 'objectives'])) {
+                    Log::debug(json_encode($action));
                     $message  = trans('messages.' . $action) . ' ';
                     $message .= trans('messages.of') .' ';
                     $message .= trans('messages.'. $controller) .' ';
