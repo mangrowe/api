@@ -38,6 +38,13 @@ class Objective extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['total'];
+
+    /**
      * The organization associated with.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -179,5 +186,15 @@ class Objective extends Model
         }
 
         return $total;
+    }
+
+    /**
+     * Get the progress total.
+     *
+     * @return float
+     */
+    public function getTotalAttribute()
+    {
+        return $this->attributes['total'] = $this->progress();
     }
 }

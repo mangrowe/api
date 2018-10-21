@@ -10,6 +10,7 @@ use App\Models\Team;
 use App\Models\Cycle;
 use App\Models\Organization;
 use App\Models\Tag;
+use App\Models\Department;
 
 class ObjectivesController extends Controller
 {
@@ -198,5 +199,32 @@ class ObjectivesController extends Controller
                 'message' => trans('messages.error'),
             ], 400);
         }
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function dashboard(Request $request)
+    {
+        $cycles = Cycle::where('organization_id', $request->input('organization_id'))->latest()->get();
+        $departments = Department::where('organization_id', $request->input('organization_id'))->orderBy('title')->get();
+        if($request->has('quest')) {
+            $objective = new Objective();
+            return response()->json([
+                'objectives' => Objective::where('organization_id', $request->input('organization_id'))
+                ->where($objective->search($request->all()))
+                ->with('cycle')->with('user:id,name')->with('team')->get(),
+                'cycles' => $cycles,
+                'departments'=> $departments,
+            ]);
+        }
+        return response()->json([
+            'objectives' => Objective::where('organization_id', $request->input('organization_id'))->with('cycle')->with('user:id,name')->with('team')->get(),
+            'cycles' => $cycles,
+            'departments'=> $departments,
+        ]);
     }
 }
