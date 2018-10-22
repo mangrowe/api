@@ -90,7 +90,7 @@ class ObjectivesController extends Controller
      */
     public function show($id)
     {
-        return Objective::with('keyResults')->findOrFail($id);
+        return Objective::with('keyResults')->with('cycle')->with('team')->with('user:id,name')->with('parent')->with('department')->with('tags')->findOrFail($id);
     }
 
     /**

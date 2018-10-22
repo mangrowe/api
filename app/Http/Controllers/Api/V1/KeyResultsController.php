@@ -65,12 +65,17 @@ class KeyResultsController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        return KeyResult::findOrFail($id);
+        $keyResult = KeyResult::where('organization_id', $request->input('organization_id'))->with('objective')->with('user')->findOrFail($id);
+        return response()->json([
+            'keyResult' => $keyResult,
+            'department' => $keyResult->objective->department->title,
+        ]);
     }
 
     /**
