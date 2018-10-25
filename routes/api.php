@@ -32,6 +32,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
         Route::get('users/profile', 'UsersController@profile');
         Route::get('dashboard', 'UsersController@dashboard');
         
+        Route::resource('impediments', 'ImpedimentsController');
         Route::resource('settings', 'SettingsController', ['except' => ['show', 'create']]);
         Route::resource('departments', 'DepartmentsController');
         Route::resource('checkIns', 'CheckInsController');
