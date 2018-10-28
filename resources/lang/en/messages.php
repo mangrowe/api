@@ -29,5 +29,9 @@ return [
     'destroy' => 'Removal',
     'by' => 'by',
     'of' => 'of',
+    'status_open' => 'Open',
+    'status_close' => 'Closed',
+    'status_pending' => 'Pending',
+    'status_solve' => 'Solved',
 
 ];

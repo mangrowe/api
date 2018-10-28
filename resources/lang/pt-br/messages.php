@@ -29,5 +29,9 @@ return [
     'destroy' => 'Remoção',
     'by' => 'por',
     'of' => 'de',
+    'status_open' => 'Aberto',
+    'status_close' => 'Fechado',
+    'status_pending' => 'Pendente',
+    'status_solve' => 'Resolvido',
 
 ];

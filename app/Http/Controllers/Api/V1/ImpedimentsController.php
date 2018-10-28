@@ -39,6 +39,7 @@ class ImpedimentsController extends Controller
             'objective' => $keyResult->objective->title,
             'keyResult' => $keyResult->title,
             'users' => $keyResult->organization->users,
+            'owner_id' => Auth::guard('api')->user()->id,
         ]);
     }
 
@@ -83,6 +84,8 @@ class ImpedimentsController extends Controller
             'objective' => $impediment->keyResult->objective->title,
             'keyResult' => $impediment->keyResult->title,
             'users' => $impediment->keyResult->organization->users,
+            'owner_id' => Auth::guard('api')->user()->id,
+            'closed' => Impediment::where('parent_id', $id)->where('status', 3)->first(),
         ]);
     }
 
