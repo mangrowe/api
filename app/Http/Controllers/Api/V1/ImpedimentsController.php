@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Api\V1;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Storage;
 use Auth;
+
 use App\Models\Organization;
 use App\Models\Impediment;
 use App\Models\KeyResult;
@@ -51,6 +52,10 @@ class ImpedimentsController extends Controller
     {
         $req = $request->all();
         $req['user_id'] = Auth::guard('api')->user()->id;
+        if($request->hasFile('archive')) {
+            $attach = $request->file('archive')->store('archives');
+            if($attach) $req['archive'] = $attach;
+        }
         if(Impediment::create($req)) {
             return response()->json([
                 'message' => trans('messages.success'),
