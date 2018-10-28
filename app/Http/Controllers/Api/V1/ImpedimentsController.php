@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Auth;
+use Mail;
 
 use App\Models\Organization;
 use App\Models\Impediment;
 use App\Models\KeyResult;
+use App\Mail\ImpedimentReceiverMail;
 
 class ImpedimentsController extends Controller
 {
@@ -57,7 +59,11 @@ class ImpedimentsController extends Controller
             $attach = $request->file('archive')->store('archives');
             if($attach) $req['archive'] = $attach;
         }
-        if(Impediment::create($req)) {
+        $impediment = Impediment::create($req);
+        if($impediment) {
+            if($impediment->receiver_id) {
+                Mail::to($impediment->receiver->email)->send(new ImpedimentReceiverMail($impediment));
+            }
             return response()->json([
                 'message' => trans('messages.success'),
             ]);
