@@ -1,4 +1,4 @@
-<h3>Olá, {{ $receiver }}! Você foi associado em um impendimento.</h3>
+<h3>Olá, {{ $receiver }}! Você foi associado em um impedimento.</h3>
 <p>Por: {{ $sender }}</p>
 <p>Objetivo: {{ $objective }}</p>
 <p>Resultado chave: {{ $key_result }}</p>
