@@ -29,7 +29,7 @@ class ReportsController extends Controller
             ]);
         }else {
             return response()->json([
-                'user' => Auth::user()->with('objectives')->with('keyResults')->first(),
+                'user' => User::findOrFail(Auth::user()->id)->with('objectives')->with('keyResults')->get(),
             ]);
         }
     }
