@@ -21,15 +21,15 @@ class ReportsController extends Controller
     {
         if($request->has('user_id')) {
             return response()->json([
-                'user' => User::findOrFail($request->input('user_id'))->with('objectives')->with('keyResults')->get(),
+                'user' => User::with('objectives')->with('keyResults')->findOrFail($request->input('user_id')),
             ]);
         }else if($request->has('team_id')){
             return response()->json([
-                'team' => Team::findOrFail($request->input('team_id'))->with('objectives')->get(),
+                'team' => Team::with('objectives')->findOrFail($request->input('team_id')),
             ]);
         }else {
             return response()->json([
-                'user' => User::findOrFail(Auth::user()->id)->with('objectives')->with('keyResults')->get(),
+                'user' => User::with('objectives')->with('keyResults')->findOrFail(Auth::user()->id),
             ]);
         }
     }
