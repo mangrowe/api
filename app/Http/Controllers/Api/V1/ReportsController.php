@@ -8,6 +8,7 @@ use Auth;
 
 use App\Models\User;
 use App\Models\Team;
+use App\Models\Organization;
 
 class ReportsController extends Controller
 {
@@ -19,6 +20,7 @@ class ReportsController extends Controller
      */
     public function index(Request $request)
     {
+        $organization = Organization::findOrFail($request->input('organization_id'));
         if($request->has('user_id')) {
             return response()->json([
                 'user' => User::with('objectives')->with('keyResults')->findOrFail($request->input('user_id')),
@@ -30,6 +32,7 @@ class ReportsController extends Controller
         }else {
             return response()->json([
                 'user' => User::with('objectives')->with('keyResults')->findOrFail(Auth::user()->id),
+                'users' => $organization->users,
             ]);
         }
     }
