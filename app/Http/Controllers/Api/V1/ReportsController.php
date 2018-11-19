@@ -25,14 +25,34 @@ class ReportsController extends Controller
             return response()->json([
                 'user' => User::with('objectives')->with('keyResults')->findOrFail($request->input('user_id')),
             ]);
-        }else if($request->has('team_id')){
-            return response()->json([
-                'team' => Team::with('objectives')->findOrFail($request->input('team_id')),
-            ]);
         }else {
             return response()->json([
                 'user' => User::with('objectives')->with('keyResults')->findOrFail(Auth::user()->id),
                 'users' => $organization->users,
+            ]);
+        }
+    }
+
+    /**
+     * Reports for teams.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function teams(Request $request)
+    {
+        if($request->has('teams_id')) {
+            return response()->json([
+                'teams' => Team::where('organization_id', $request->input('organization_id'))
+                    ->whereIn('id', explode(',', $request->input('teams_id')))
+                    ->with('objectives')
+                    ->with('users')->get(),
+            ]);
+        }else {
+            return response()->json([
+                'teams' => Team::where('organization_id', $request->input('organization_id'))
+                    ->with('objectives')
+                    ->with('users')->get(),
             ]);
         }
     }
