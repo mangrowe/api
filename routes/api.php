@@ -24,6 +24,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
         Route::post('settings/backups', 'SettingsController@backups');
         Route::post('objectives/cloner/{id}', 'ObjectivesController@cloner');
         
+        Route::get('reports/users', 'ReportsController@users');
         Route::get('reports/teams', 'ReportsController@teams');
         Route::get('reports', 'ReportsController@index');
         Route::get('objectives/dashboard', 'ObjectivesController@dashboard');

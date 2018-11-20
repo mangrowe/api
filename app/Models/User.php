@@ -28,6 +28,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['total'];
+
+    /**
      * The organizations that the user is associated.
      * 
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -87,5 +94,18 @@ class User extends Authenticatable
         $this->api_token = str_random(60);
         $this->save();
         return $this->api_token;
+    }
+
+    /**
+     * Get the progress total.
+     *
+     * @return float
+     */
+    public function getTotalAttribute()
+    {
+        if($this->objectives) {
+            return $this->objectives->sum('total') / count($this->objectives);
+        }
+        return 0;
     }
 }

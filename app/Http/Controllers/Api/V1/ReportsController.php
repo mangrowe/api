@@ -56,4 +56,29 @@ class ReportsController extends Controller
             ]);
         }
     }
+
+    /**
+     * Reports users.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function users(Request $request)
+    {
+        if($request->has('users_id')) {
+            return response()->json([
+                'users' => User::select('id', 'name', 'email')
+                    ->whereIn('id', explode(',', $request->input('users_id')))
+                    ->with('objectives')
+                    ->with('keyResults')
+                    ->get(),
+            ]);
+        }else {
+            return response()->json([
+                'users' => User::select('id', 'name', 'email')->with('objectives')
+                    ->with('keyResults')
+                    ->get(),
+            ]);
+        }
+    }
 }
