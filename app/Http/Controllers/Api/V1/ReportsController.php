@@ -67,7 +67,7 @@ class ReportsController extends Controller
     {
         if($request->has('users_id')) {
             return response()->json([
-                'users' => User::select('id', 'name', 'email')
+                'users' => User::orderBy('name')->select('id', 'name', 'email')
                     ->whereIn('id', explode(',', $request->input('users_id')))
                     ->with('objectives')
                     ->with('keyResults')
@@ -75,7 +75,8 @@ class ReportsController extends Controller
             ]);
         }else {
             return response()->json([
-                'users' => User::select('id', 'name', 'email')->with('objectives')
+                'users' => User::orderBy('name')->select('id', 'name', 'email')
+                    ->with('objectives')
                     ->with('keyResults')
                     ->get(),
             ]);
