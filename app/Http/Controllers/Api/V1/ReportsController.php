@@ -43,10 +43,19 @@ class ReportsController extends Controller
     {
         if($request->has('teams_id')) {
             return response()->json([
+                'users' => User::join('team_user', 'users.id', '=', 'team_user.user_id')
+                    ->join('teams', 'teams.id', '=', 'team_user.team_id')
+                    ->orderBy('users.name')
+                    ->whereIn('teams.id', explode(',', $request->input('teams_id')))
+                    ->with('objectives')
+                    ->with('keyResults')
+                    ->with('teams')
+                    ->select('users.id', 'users.name', 'users.email')
+                    ->distinct()
+                    ->get(),
                 'teams' => Team::where('organization_id', $request->input('organization_id'))
                     ->whereIn('id', explode(',', $request->input('teams_id')))
-                    ->with('objectives')
-                    ->with('users')->get(),
+                    ->get(),
             ]);
         }else {
             return response()->json([
@@ -71,14 +80,21 @@ class ReportsController extends Controller
                     ->whereIn('id', explode(',', $request->input('users_id')))
                     ->with('objectives')
                     ->with('keyResults')
+                    ->with('teams')
                     ->get(),
+                'teams' => Team::where('organization_id', $request->input('organization_id'))->get(),
             ]);
         }else {
             return response()->json([
-                'users' => User::orderBy('name')->select('id', 'name', 'email')
+                'users' => User::join('organization_user', 'users.id', '=', 'organization_user.user_id')
+                    ->orderBy('users.name')
                     ->with('objectives')
                     ->with('keyResults')
+                    ->with('teams')
+                    ->where('organization_user.organization_id', $request->input('organization_id'))
+                    ->select('users.id', 'users.name', 'users.email')
                     ->get(),
+                'teams' => Team::where('organization_id', $request->input('organization_id'))->get(),
             ]);
         }
     }
