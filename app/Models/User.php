@@ -104,7 +104,8 @@ class User extends Authenticatable
     public function getTotalAttribute()
     {
         if($this->objectives) {
-            return $this->objectives->sum('total') / count($this->objectives);
+            $total = count($this->objectives) ? count($this->objectives) : 1;
+            return $this->objectives->sum('total') / $total;
         }
         return 0;
     }
