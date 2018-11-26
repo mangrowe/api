@@ -9,6 +9,7 @@ use Auth;
 use App\Models\User;
 use App\Models\Team;
 use App\Models\Organization;
+use App\Models\Objective;
 
 class ReportsController extends Controller
 {
@@ -97,5 +98,18 @@ class ReportsController extends Controller
                 'teams' => Team::where('organization_id', $request->input('organization_id'))->get(),
             ]);
         }
+    }
+
+    /**
+     * Reports objectives.
+     * 
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function objectives(Request $request)
+    {
+        return response()->json([
+            'objectives' => Objective::where('organization_id', $request->input('organization_id'))->get(),
+        ]);
     }
 }
