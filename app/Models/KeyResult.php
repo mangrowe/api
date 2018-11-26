@@ -109,9 +109,11 @@ class KeyResult extends Model
             return $this->current / $this->target * 100;
         }else {
             if($this->criteria == 'gte') {
-                return  ($this->current - $this->initial) / ($this->target - $this->initial) * 100;
+                $division = $this->target - $this->initial > 0 ? $this->target - $this->initial : 1;
+                return  ($this->current - $this->initial) / $division * 100;
             }else {
-                return ($this->initial - $this->current) / ($this->initial - $this->target) * 100;
+                $division = $this->initial - $this->target > 0 ? $this->initial - $this->target : 1;
+                return ($this->initial - $this->current) / $division * 100;
             }
         }
     }
