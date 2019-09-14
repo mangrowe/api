@@ -44,19 +44,10 @@ class ReportsController extends Controller
     {
         if($request->has('teams_id')) {
             return response()->json([
-                'users' => User::join('team_user', 'users.id', '=', 'team_user.user_id')
-                    ->join('teams', 'teams.id', '=', 'team_user.team_id')
-                    ->orderBy('users.name')
+                'teams' => Team::where('organization_id', $request->input('organization_id'))
                     ->whereIn('teams.id', explode(',', $request->input('teams_id')))
                     ->with('objectives')
-                    ->with('keyResults')
-                    ->with('teams')
-                    ->select('users.id', 'users.name', 'users.email')
-                    ->distinct()
-                    ->get(),
-                'teams' => Team::where('organization_id', $request->input('organization_id'))
-                    ->whereIn('id', explode(',', $request->input('teams_id')))
-                    ->get(),
+                    ->with('users')->get(),
             ]);
         }else {
             return response()->json([
