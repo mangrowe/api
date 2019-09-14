@@ -47,8 +47,7 @@ class ImpedimentReceiverMail extends Mailable
             $link .= $this->_impediment->id;   
         }
 
-        return $this->from(env('MAIL_FROM_ADDRESS'))
-        ->subject('Notificação de impedimento')
+        return $this->subject('Notificação de impedimento')
         ->view('mails.impediment_receiver')
         ->with([
             'sender' => $this->_impediment->user->name,
