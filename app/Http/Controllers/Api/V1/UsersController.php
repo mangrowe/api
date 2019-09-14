@@ -35,11 +35,13 @@ class UsersController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Http\Requests\UserRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return User::orderBy('name')->get();
+        $organization = Organization::find($request->input('organization_id'));
+        return $organization->users;
     }
 
     /**
