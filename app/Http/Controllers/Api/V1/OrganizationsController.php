@@ -27,7 +27,9 @@ class OrganizationsController extends Controller
      */
     public function store(Request $request)
     {
-        if(Organization::create($request->all())) {
+        $organization = Organization::create($request->all());
+        if($organization) {
+            $organization->users()->attach(Auth::user()->id);
             return response()->json([
                 'message' => trans('messages.success')
             ]);
