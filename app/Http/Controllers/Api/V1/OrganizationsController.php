@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Organization;
+use Auth;
 
 class OrganizationsController extends Controller
 {
@@ -15,7 +16,7 @@ class OrganizationsController extends Controller
      */
     public function index()
     {
-        return Organization::orderBy('title')->get();
+        return Auth::user()->organizations()->orderBy('title')->get();
     }
 
     /**

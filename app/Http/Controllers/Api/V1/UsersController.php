@@ -79,7 +79,7 @@ class UsersController extends Controller
         return response()->json([
             'user' => User::findOrFail($id),
             'associations' => $user->organizations,
-            'organizations' => Organization::orderBy('title')->get(),
+            'organizations' => Auth::user()->organizations()->orderBy('title')->get(),
         ]);
     }
 
