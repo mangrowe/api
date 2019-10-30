@@ -53,7 +53,7 @@ class UsersController extends Controller
     public function store(UserRequest $request)
     {
         $req = $request->all();
-        $req['password'] = strlen($req['password']) > 4 ? bcrypt($req['password']) : $user->password;
+        $req['password'] = bcrypt($req['password']);
         $user = User::create($req);
         if($user) {
             $user->organizations()->sync($req['organization_id']);
