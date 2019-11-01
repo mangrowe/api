@@ -17,6 +17,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function() {
     Route::post('reset', 'Auth\ResetPasswordController@reset');
     Route::post('login', 'Auth\LoginController@login');
     Route::post('logout', 'Auth\LoginController@logout');
+    Route::post('register', 'Auth\RegisterController@register');
 
     Route::middleware(['auth:api', 'logs'])->group(function() {
         Route::post('settings/restores', 'SettingsController@restores');
